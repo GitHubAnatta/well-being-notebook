@@ -58,7 +58,15 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.shared_text_box_qpte = QtWidgets.QPlainTextEdit()
         self.shared_text_box_qpte.setPlaceholderText("Text notes")
-        button_row_vbox_l4.addWidget(self.shared_text_box_qpte)
+        right_panel_vbox_l3.addWidget(self.shared_text_box_qpte)
+        # buttons: copy, clear
+
+        hbox_l4 = QtWidgets.QHBoxLayout()
+        right_panel_vbox_l3.addLayout(hbox_l4)
+        self.copy_qpb = QtWidgets.QPushButton("Copy")
+        hbox_l4.addWidget(self.copy_qpb)
+        self.clear_qpb = QtWidgets.QPushButton("Clear")
+        hbox_l4.addWidget(self.clear_qpb)
 
         self.search_qle = QtWidgets.QLineEdit()
         # self.search_qle.textChanged.connect(self.on_search_text_changed)  # textEdited
