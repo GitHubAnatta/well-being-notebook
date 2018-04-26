@@ -21,38 +21,39 @@ class MainWindow(QtWidgets.QMainWindow):
     # noinspection PyArgumentList,PyUnresolvedReferences
     def __init__(self):
         super().__init__()
-        self.setGeometry(40, 30, 900, 600)
+        self.setGeometry(40, 30, 1100, 600)
 
         central_w1 = QtWidgets.QWidget()
         self.setCentralWidget(central_w1)
-        vbox_l2 = QtWidgets.QVBoxLayout()
-        central_w1.setLayout(vbox_l2)
-
-        button_row_hbox_l3 = QtWidgets.QHBoxLayout()
-        vbox_l2.addLayout(button_row_hbox_l3)
+        hbox_l2 = QtWidgets.QHBoxLayout()
+        central_w1.setLayout(hbox_l2)
 
         self.stacked_widget = QtWidgets.QStackedWidget()
-        vbox_l2.addWidget(self.stacked_widget)
+        hbox_l2.addWidget(self.stacked_widget)
 
+        right_panel_vbox_l3 = QtWidgets.QVBoxLayout()
+        hbox_l2.addLayout(right_panel_vbox_l3)
 
+        button_row_vbox_l4 = QtWidgets.QVBoxLayout()
+        right_panel_vbox_l3.addLayout(button_row_vbox_l4)
 
         # Adding the individual parts of the notebook
 
-        button_row_hbox_l3.addStretch(1)
+        button_row_vbox_l4.addStretch(1)
 
         self.self_compassion_journal = wbn.self_compassion.main.SelfCompassionMainCw()
         self.stacked_widget.addWidget(self.self_compassion_journal)
         self.self_compassion_journal_qpb = QtWidgets.QPushButton("Self-compassion")
         self.self_compassion_journal_qpb.clicked.connect(self._on_self_compassion_clicked)
-        button_row_hbox_l3.addWidget(self.self_compassion_journal_qpb)
+        button_row_vbox_l4.addWidget(self.self_compassion_journal_qpb)
 
         self.schedule = wbn.habits.main.HabitsMainCw()
         self.stacked_widget.addWidget(self.schedule)
         self.schedule_qpb = QtWidgets.QPushButton("Schedule")
         self.schedule_qpb.clicked.connect(self._on_schedule_clicked)
-        button_row_hbox_l3.addWidget(self.schedule_qpb)
+        button_row_vbox_l4.addWidget(self.schedule_qpb)
 
-        button_row_hbox_l3.addStretch(1)
+        button_row_vbox_l4.addStretch(1)
 
     def _on_self_compassion_clicked(self):
         self.stacked_widget.setCurrentIndex(0)

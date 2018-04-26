@@ -7,7 +7,7 @@ from PyQt5 import QtGui
 from PyQt5 import QtWidgets
 import wbn.habits.selection_panel
 import wbn.habits.central_panel
-import wbn.habits.diary_panel
+import wbn.habits.rem_diary_panel
 
 
 class EventSource(enum.Enum):
@@ -40,8 +40,8 @@ class HabitsMainCw(QtWidgets.QWidget):
         self.central_panel = wbn.habits.central_panel.CentralPanelCw()
         hbox_l2.addWidget(self.central_panel)
 
-        self.diary_panel = wbn.habits.diary_panel.DiaryPanelCw()
-        hbox_l2.addWidget(self.diary_panel)
+        #self.diary_panel = wbn.habits.diary_panel.DiaryPanelCw()
+        #hbox_l2.addWidget(self.diary_panel)
 
 
 

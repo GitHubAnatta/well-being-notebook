@@ -56,29 +56,43 @@ class SelfCompassionMainCw(QtWidgets.QWidget):
 
         self.active_message_str = ""
 
-        vbox_l2 = QtWidgets.QVBoxLayout()
-        self.setLayout(vbox_l2)
+        hbox_l2 = QtWidgets.QHBoxLayout()
+        self.setLayout(hbox_l2)
 
-        hbox_l3 = QtWidgets.QHBoxLayout()
-        vbox_l2.addLayout(hbox_l3)
+        vbox_l3 = QtWidgets.QVBoxLayout()
+        hbox_l2.addLayout(vbox_l3, stretch=1)
+
+        self.encouragement_qlw = QtWidgets.QListWidget()
+        self.encouragement_qlw.currentRowChanged.connect(self._on_encouragement_row_changed)
+        #for compassion_reminder in compassion_reminder_str_list:
+        self.encouragement_qlw.addItems(compassion_reminder_str_list)
+        vbox_l3.addWidget(self.encouragement_qlw)
+        self.new_random_message_qpb = QtWidgets.QPushButton("Random Message")
+        self.new_random_message_qpb.clicked.connect(self.on_new_random_message_clicked)
+        vbox_l3.addWidget(self.new_random_message_qpb)
+
+
+        vbox_l3 = QtWidgets.QVBoxLayout()
+        hbox_l2.addLayout(vbox_l3, stretch=3)
 
         self.inspiring_message_qll = QtWidgets.QLabel()
         self.inspiring_message_qll.setWordWrap(True)
-        hbox_l3.addWidget(self.inspiring_message_qll)
+        vbox_l3.addWidget(self.inspiring_message_qll)
         self._show_new_random_inspiring_message()
-
-        self.new_random_message_qpb = QtWidgets.QPushButton("Random Message")
-        self.new_random_message_qpb.clicked.connect(self.on_new_random_message_clicked)
-        hbox_l3.addWidget(self.new_random_message_qpb)
 
         self.text_input_cte = PlainTextEdit()
         self.text_input_cte.return_key_released_signal.connect(self.on_text_input_return_key_released)
-        vbox_l2.addWidget(self.text_input_cte)
+        vbox_l3.addWidget(self.text_input_cte)
 
         self.letting_go_qpb = QtWidgets.QPushButton("I let go of my thinking and my suffering")
         self.letting_go_qpb.clicked.connect(self.on_letting_go_clicked)
-        vbox_l2.addWidget(self.letting_go_qpb)
+        vbox_l3.addWidget(self.letting_go_qpb)
 
+
+        self.update_gui()
+
+    def _on_encouragement_row_changed(self, i_new_current_row: int):
+        self.active_message_str = compassion_reminder_str_list[i_new_current_row]
         self.update_gui()
 
     def on_new_random_message_clicked(self):
@@ -94,14 +108,14 @@ class SelfCompassionMainCw(QtWidgets.QWidget):
             if new_message_str != self.active_message_str:
                 break
         self.active_message_str = new_message_str
-        self.inspiring_message_qll.setText(new_message_str)
+        self.update_gui()
 
     def on_letting_go_clicked(self):
         self.text_input_cte.clear()
         self._show_new_random_inspiring_message()
 
     def update_gui(self):
-        pass
+        self.inspiring_message_qll.setText(self.active_message_str)
 
 
 class PlainTextEdit(QtWidgets.QPlainTextEdit):
