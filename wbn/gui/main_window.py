@@ -29,10 +29,10 @@ class MainWindow(QtWidgets.QMainWindow):
         central_w1.setLayout(hbox_l2)
 
         self.stacked_widget = QtWidgets.QStackedWidget()
-        hbox_l2.addWidget(self.stacked_widget)
+        hbox_l2.addWidget(self.stacked_widget, stretch=5)
 
         right_panel_vbox_l3 = QtWidgets.QVBoxLayout()
-        hbox_l2.addLayout(right_panel_vbox_l3)
+        hbox_l2.addLayout(right_panel_vbox_l3, stretch=1)
 
         button_row_vbox_l4 = QtWidgets.QVBoxLayout()
         right_panel_vbox_l3.addLayout(button_row_vbox_l4)
@@ -52,6 +52,22 @@ class MainWindow(QtWidgets.QMainWindow):
         self.schedule_qpb = QtWidgets.QPushButton("Schedule")
         self.schedule_qpb.clicked.connect(self._on_schedule_clicked)
         button_row_vbox_l4.addWidget(self.schedule_qpb)
+
+        #gratitude
+        #quotes and insights
+
+        self.shared_text_box_qpte = QtWidgets.QPlainTextEdit()
+        self.shared_text_box_qpte.setPlaceholderText("Text notes")
+        button_row_vbox_l4.addWidget(self.shared_text_box_qpte)
+
+        self.search_qle = QtWidgets.QLineEdit()
+        # self.search_qle.textChanged.connect(self.on_search_text_changed)  # textEdited
+        self.search_qle.setPlaceholderText("Search")
+        right_panel_vbox_l3.addWidget(self.search_qle)
+
+        self.hashtags_composite = QtWidgets.QListWidget()
+        self.hashtags_composite.addItems(["Item 1", "List item 2", "3"])
+        right_panel_vbox_l3.addWidget(self.hashtags_composite)
 
         button_row_vbox_l4.addStretch(1)
 
