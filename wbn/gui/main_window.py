@@ -66,6 +66,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.gratitude_qpb.clicked.connect(self._on_gratitude_clicked)
         button_row_vbox_l4.addWidget(self.gratitude_qpb)
 
+        #TODO: If something has been done for one of the tabs, show it in bold face, or some other difference
 
 
         #gratitude

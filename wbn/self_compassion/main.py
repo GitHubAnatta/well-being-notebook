@@ -7,6 +7,7 @@ from PyQt5 import QtCore
 from PyQt5 import QtGui
 from PyQt5 import QtWidgets
 import wbn.self_compassion_model
+import wbn.wbn_global
 
 
 class SelfCompassionMainCw(QtWidgets.QWidget):
@@ -43,16 +44,33 @@ class SelfCompassionMainCw(QtWidgets.QWidget):
         self.add_new_support_phrase_qpb.clicked.connect(self.add_new_support_phrase_clicked)
         hbox_l4.addWidget(self.add_new_support_phrase_qpb)
 
-
         # Main area
 
         vbox_l3 = QtWidgets.QVBoxLayout()
         hbox_l2.addLayout(vbox_l3, stretch=3)
 
-        self.inspiring_message_qll = QtWidgets.QLabel()
-        self.inspiring_message_qll.setWordWrap(True)
-        vbox_l3.addWidget(self.inspiring_message_qll)
+        support_hbox_l4 = QtWidgets.QHBoxLayout()
+        vbox_l3.addLayout(support_hbox_l4, stretch=3)
+
+        self.support_phrase_qll = wbn.wbn_global.Label(
+            i_point_size=16,
+            i_word_wrap=True
+        )
+        support_hbox_l4.addWidget(self.support_phrase_qll)
         self._show_new_random_inspiring_message()
+
+        self.image_qll = QtWidgets.QLabel()
+        #self.image_qll.setScaledContents(True)
+        self.image_qll.setSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Maximum)
+        #self.image_qll.setMaximumWidth(100)
+        pixmap = QtGui.QPixmap("thailand-1571416_640.jpg")
+        self.image_qll.setPixmap(pixmap.scaled(200, 200, QtCore.Qt.KeepAspectRatio))
+        # -TODO: also needs to be added to the resize event for the widget that contains the label
+        # -more info here: https://stackoverflow.com/a/8212120/2525237
+        support_hbox_l4.addWidget(self.image_qll)
+        # IDEA: Moving this image closer to the support phrase/question
+        # >>>>>IDEA: Having an image for every question/support phrase<<<<<
+
 
         self.text_input_cte = PlainTextEdit()
         self.text_input_cte.return_key_released_signal.connect(self.on_text_input_return_key_released)
@@ -71,6 +89,11 @@ class SelfCompassionMainCw(QtWidgets.QWidget):
         self.writing_qelapsedtimer = QtCore.QTimer(self)
         self.writing_qelapsedtimer.timeout.connect(self._writing_timer_timeout)
         self.writing_qelapsedtimer.start(1000)  # -one second # 60 *
+
+
+        # Right side: Image
+        # Design: Alternatively this could be placed on the left side
+
 
         self.update_gui()
 
@@ -118,7 +141,7 @@ class SelfCompassionMainCw(QtWidgets.QWidget):
         self._show_new_random_inspiring_message()
 
     def update_gui(self):
-        self.inspiring_message_qll.setText(self.active_message_str)
+        self.support_phrase_qll.setText(self.active_message_str)
 
 
 class PlainTextEdit(QtWidgets.QPlainTextEdit):
