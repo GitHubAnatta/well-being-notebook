@@ -8,6 +8,7 @@ from PyQt5 import QtGui
 from PyQt5 import QtWidgets
 import wbn.self_compassion.main
 import wbn.habits.main
+import wbn.insights.main
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -53,6 +54,20 @@ class MainWindow(QtWidgets.QMainWindow):
         self.schedule_qpb.clicked.connect(self._on_schedule_clicked)
         button_row_vbox_l4.addWidget(self.schedule_qpb)
 
+        self.insights = wbn.insights.main.InsightsMainCw()
+        self.stacked_widget.addWidget(self.insights)
+        self.insights_qpb = QtWidgets.QPushButton("Insights")
+        self.insights_qpb.clicked.connect(self._on_insights_clicked)
+        button_row_vbox_l4.addWidget(self.insights_qpb)
+
+        self.gratitude = wbn.insights.main.InsightsMainCw()
+        self.stacked_widget.addWidget(self.gratitude)
+        self.gratitude_qpb = QtWidgets.QPushButton("Gratitude")
+        self.gratitude_qpb.clicked.connect(self._on_gratitude_clicked)
+        button_row_vbox_l4.addWidget(self.gratitude_qpb)
+
+
+
         #gratitude
         #quotes and insights
 
@@ -84,6 +99,12 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def _on_schedule_clicked(self):
         self.stacked_widget.setCurrentIndex(1)
+
+    def _on_insights_clicked(self):
+        self.stacked_widget.setCurrentIndex(2)
+
+    def _on_gratitude_clicked(self):
+        self.stacked_widget.setCurrentIndex(3)
 
     def update_gui(self):
         pass

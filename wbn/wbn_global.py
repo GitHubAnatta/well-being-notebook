@@ -4,6 +4,9 @@ from PyQt5 import QtGui
 from PyQt5 import QtWidgets
 
 
+DATABASE_FILE_STR = "wbn_db_file.db"
+
+
 class Label(QtWidgets.QLabel):
     def __init__(self, i_text="", i_word_wrap:bool=False, i_point_size:int=None, i_italics:bool=False, i_bold:bool=False):
         super().__init__(i_text)
@@ -16,5 +19,12 @@ class Label(QtWidgets.QLabel):
         new_font.setItalic(i_italics)
         new_font.setBold(i_bold)
         self.setFont(new_font)
+
+
+db_file_exists_at_application_startup_bl = False
+
+
+def get_database_filename():
+    return DATABASE_FILE_STR
 
 
