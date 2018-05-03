@@ -112,7 +112,9 @@ class SelfCompassionMainCw(QtWidgets.QWidget):
     def _writing_timer_timeout(self):
         self.seconds_passed_int += 1
         # updating the timer label:
-        time_passed_str = str(self.seconds_passed_int)
+        seconds_int = str(self.seconds_passed_int % 60).zfill(2)
+        minutes_int = str(self.seconds_passed_int // 60)
+        time_passed_str = minutes_int + ":" + seconds_int
         self.time_passed_qll.setText(time_passed_str)
 
     def _on_encouragement_row_changed(self, i_new_current_row: int):

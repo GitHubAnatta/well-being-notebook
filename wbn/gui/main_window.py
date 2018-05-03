@@ -23,6 +23,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         self.setGeometry(40, 30, 1100, 600)
+        self.setWindowIcon(QtGui.QIcon("icon.png"))
 
         central_w1 = QtWidgets.QWidget()
         self.setCentralWidget(central_w1)
