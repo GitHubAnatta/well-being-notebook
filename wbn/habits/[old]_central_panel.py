@@ -33,10 +33,19 @@ More text here, we can add templates with headers and so on.
         self.setLayout(vbox_l2)
 
         self.habit_qte = QtWidgets.QTextEdit()
-        #self.habit_qte.setReadOnly(True)
-        self.habit_qte.zoomIn(3)
-        #self.habit_qte.copyAvailable.connect(self.on_habit_copy_available)
+        self.habit_qte.setReadOnly(True)
+        self.habit_qte.zoomIn(4)
+        self.habit_qte.copyAvailable.connect(self.on_habit_copy_available)
         vbox_l2.addWidget(self.habit_qte, stretch=5)
+
+        self.edit_habit_qpb = QtWidgets.QPushButton("Edit text")
+        self.edit_habit_qpb.clicked.connect(self.on_edit_rich_text_clicked)
+        vbox_l2.addWidget(self.edit_habit_qpb)
+
+        self.diary_entry_qpte = QtWidgets.QPlainTextEdit()
+        #self.diary_entry_qpte.
+        vbox_l2.addWidget(self.diary_entry_qpte, stretch=1)
+        # TODO: Alternatively this can be inside a dialog window
 
         self.update_gui()
 
