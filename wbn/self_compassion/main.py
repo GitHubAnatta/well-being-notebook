@@ -13,6 +13,7 @@ import wbn.wbn_global
 class SelfCompassionMainCw(QtWidgets.QWidget):
     # noinspection PyArgumentList,PyUnresolvedReferences
     def __init__(self):
+
         super().__init__()
 
         self.active_message_str = ""
@@ -74,6 +75,9 @@ class SelfCompassionMainCw(QtWidgets.QWidget):
 
         self.text_input_cte = PlainTextEdit()
         self.text_input_cte.return_key_released_signal.connect(self.on_text_input_return_key_released)
+        new_font = self.text_input_cte.font()
+        new_font.setPointSize(14)
+        self.text_input_cte.setFont(new_font)
         vbox_l3.addWidget(self.text_input_cte)
 
         hbox_l4 = QtWidgets.QHBoxLayout()
@@ -130,9 +134,19 @@ class SelfCompassionMainCw(QtWidgets.QWidget):
         #self._show_new_random_inspiring_message()
 
     def _show_new_random_inspiring_message(self):
+        if self.encouragement_qlw.count() < 1:
+            logging.warning("_show_new_random_inspiring_message: count() < 1")
+            return
         while True:
-            sc_support_phrase = random.choice(wbn.self_compassion_model.SelfCompassionM.get_all())
-            new_message_str = sc_support_phrase.support_phrase
+            random_number_from_list_int = random.choice(range(0, self.encouragement_qlw.count()))
+            #sc_support_phrase = random.choice(wbn.self_compassion_model.SelfCompassionM.get_all())
+            self.encouragement_qlw.setCurrentRow(random_number_from_list_int)
+
+            random_support_phrase = self.get_phrase_for_row_number(random_number_from_list_int)
+
+            # check the vertical sort order
+
+            new_message_str = random_support_phrase.support_phrase
             if new_message_str != self.active_message_str:
                 break
         self.active_message_str = new_message_str
@@ -140,7 +154,38 @@ class SelfCompassionMainCw(QtWidgets.QWidget):
 
     def on_letting_go_clicked(self):
         self.text_input_cte.clear()
+        #self.update_db_sort_order_for_all_rows()
+
+        # TODO: Move to top --- self.encouragement_qlw.move
+
         self._show_new_random_inspiring_message()
+
+    def get_phrase_for_row_number(self, i_row_number: int):
+        ret_support_phrase = None
+        for support_phrase in wbn.self_compassion_model.SelfCompassionM.get_all():
+            if i_row_number == support_phrase.vert_order:
+                ret_support_phrase = support_phrase
+                break
+        return ret_support_phrase
+
+
+    def update_db_sort_order_for_all_rows(self):
+        logging.debug("update_db_sort_order_for_all_rows")
+        count = 0
+        while count < self.list_widget.count():
+            q_list_item_widget = self.list_widget.item(count)
+            custom_label = self.list_widget.itemWidget(q_list_item_widget)
+            id_int = custom_label.entry_id
+            row_int = self.list_widget.row(q_list_item_widget)
+            wbn.self_compassion_model.SelfCompassionM.update_sort_order(
+                id_int,
+                row_int
+            )
+            logging.debug("id_int = " + str(id_int) + ", row_int = " + str(row_int))
+            count += 1
+
+        #self.update_gui()
+        #self.update_selected()
 
     def update_gui(self):
         self.support_phrase_qll.setText(self.active_message_str)

@@ -12,6 +12,8 @@ SQLITE_NULL_STR = "NULL"
 NO_REFERENCE_INT = -1
 NO_REST_REMINDER_INT = -1
 NO_BREATHING_REMINDER_INT = -1
+NOT_USED_YET_INT = -1
+NOT_IMAGE_SET_STR = ""
 
 
 def get_schema_version(i_db_conn: sqlite3.Connection) -> int:
@@ -30,7 +32,11 @@ def initial_schema_and_setup(i_db_conn: sqlite3.Connection) -> None:
         "CREATE TABLE " + wbn.db_schema.Schema.SelfCompassionSupportPhrasesTable.name + "("
         + wbn.db_schema.Schema.SelfCompassionSupportPhrasesTable.Cols.id + " INTEGER PRIMARY KEY, "
         + wbn.db_schema.Schema.SelfCompassionSupportPhrasesTable.Cols.vertical_order + " INTEGER NOT NULL, "
-        + wbn.db_schema.Schema.SelfCompassionSupportPhrasesTable.Cols.support_phrase + " TEXT NOT NULL"
+        + wbn.db_schema.Schema.SelfCompassionSupportPhrasesTable.Cols.support_phrase + " TEXT NOT NULL, "
+        + wbn.db_schema.Schema.SelfCompassionSupportPhrasesTable.Cols.last_time_used + " INTEGER NOT NULL "
+        + "DEFAULT" + "'" + str(NOT_USED_YET_INT) + "'" + ", "
+        + wbn.db_schema.Schema.SelfCompassionSupportPhrasesTable.Cols.image_path + " TEXT NOT NULL "
+        + "DEFAULT" + "'" + str(NOT_IMAGE_SET_STR) + "'"
         + ")"
     )
 
@@ -47,7 +53,7 @@ def upgrade_1_2(i_db_conn):
 
 
 upgrade_steps = {
-    1: initial_schema_and_setup,
+    2: initial_schema_and_setup,
 }
 
 

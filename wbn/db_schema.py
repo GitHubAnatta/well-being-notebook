@@ -9,6 +9,8 @@ class Schema:
             vertical_order = "vertical_order"
             # title = "title"  # -if not set will be automatically using the first parts of the quote
             support_phrase = "support_phrase"
+            last_time_used = "last_time_used"
+            image_path = "image_path"
             # last used: written for, selected at random, selected manually
 
     class SettingsTable:

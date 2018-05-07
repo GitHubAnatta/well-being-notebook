@@ -34,11 +34,15 @@ class SelfCompassionM:
         self,
         i_id: int,
         i_vert_order: int,
-        i_phrase: str
+        i_phrase: str,
+        i_last_time_used: int,
+        i_image_path: str
     ) -> None:
         self._id_int = i_id
         self._vert_order_int = i_vert_order
         self._support_phrase_str = i_phrase
+        self._last_time_used_int = i_last_time_used
+        self._image_path_str = i_image_path
 
     @property
     def id(self) -> int:
@@ -66,6 +70,30 @@ class SelfCompassionM:
         self._update_obj(
             wbn.db_schema.Schema.SelfCompassionSupportPhrasesTable.Cols.support_phrase,
             i_new_vert_order
+        )
+
+    @property
+    def last_time_used(self) -> int:
+        return self._last_time_used_int
+
+    @last_time_used.setter
+    def last_time_used(self, i_last_time_used: int) -> None:
+        self._last_time_used_int = i_last_time_used
+        self._update_obj(
+            wbn.db_schema.Schema.SelfCompassionSupportPhrasesTable.Cols.last_time_used,
+            i_last_time_used
+        )
+
+    @property
+    def image_path(self) -> str:
+        return self._image_path_str
+
+    @last_time_used.setter
+    def last_time_used(self, i_image_path: str) -> None:
+        self._image_path_str = i_image_path
+        self._update_obj(
+            wbn.db_schema.Schema.SelfCompassionSupportPhrasesTable.Cols.image_path,
+            i_image_path
         )
 
     def _update_obj(self, i_col_name: str, i_new_value) -> None:
