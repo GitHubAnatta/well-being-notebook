@@ -72,13 +72,31 @@ class SelfCompassionMainCw(QtWidgets.QWidget):
         # IDEA: Moving this image closer to the support phrase/question
         # >>>>>IDEA: Having an image for every question/support phrase<<<<<
 
+        hbox_l4 = QtWidgets.QHBoxLayout()
+        vbox_l3.addLayout(hbox_l4)
+
 
         self.text_input_cte = PlainTextEdit()
         self.text_input_cte.return_key_released_signal.connect(self.on_text_input_return_key_released)
+        self.text_input_cte.setPlaceholderText("Please look at yourself with the eyes of compassion")
         new_font = self.text_input_cte.font()
         new_font.setPointSize(14)
         self.text_input_cte.setFont(new_font)
-        vbox_l3.addWidget(self.text_input_cte)
+        hbox_l4.addWidget(self.text_input_cte, stretch=3)
+
+        vbox_l5 = QtWidgets.QVBoxLayout()
+        hbox_l4.addLayout(vbox_l5, stretch=1)
+
+        feelings_list = ["Body - pleasant", "Body - unpleasant", "Body - neutral", "Mind - pleasant", "Mind - unpleasant", "Mind - neutral"]
+        self.feelings_qlw = QtWidgets.QListWidget()
+        self.feelings_qlw.addItems(feelings_list)
+        vbox_l5.addWidget(self.feelings_qlw, stretch=3)
+        # self.feelings_qlw.resize
+
+        mind_list = ["Lust", "Without lust", "Hatred", "Without hatred", "Delusion", "Without delusion", "Contracted", "Distracted", "Exalted", "Unexalted", "Surpassable", "Unsurpassable", "Concentrated", "Unconcentrated", "Liberated", "Unliberated"]
+        self.mind_qlw = QtWidgets.QListWidget()
+        self.mind_qlw.addItems(mind_list)
+        vbox_l5.addWidget(self.mind_qlw, stretch=5)
 
         hbox_l4 = QtWidgets.QHBoxLayout()
         vbox_l3.addLayout(hbox_l4)

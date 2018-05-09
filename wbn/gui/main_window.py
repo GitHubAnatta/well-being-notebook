@@ -67,6 +67,13 @@ class MainWindow(QtWidgets.QMainWindow):
         self.gratitude_qpb.clicked.connect(self._on_gratitude_clicked)
         button_row_vbox_l4.addWidget(self.gratitude_qpb)
 
+        self.friends = QtWidgets.QLabel("list of friends and contact information")
+        self.stacked_widget.addWidget(self.friends)
+        self.friends_qpb = QtWidgets.QPushButton("Friends")
+        self.friends_qpb.clicked.connect(self._on_friends_clicked)
+        button_row_vbox_l4.addWidget(self.friends_qpb)
+
+
         #TODO: If something has been done for one of the tabs, show it in bold face, or some other difference
 
 
@@ -107,6 +114,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def _on_gratitude_clicked(self):
         self.stacked_widget.setCurrentIndex(3)
+
+    def _on_friends_clicked(self):
+        self.stacked_widget.setCurrentIndex(4)
 
     def update_gui(self):
         pass
