@@ -104,6 +104,11 @@ class SelfCompassionMainCw(QtWidgets.QWidget):
         self.time_passed_qll = QtWidgets.QLabel("Timer not started yet")
         hbox_l4.addWidget(self.time_passed_qll)
 
+        self.next_phrase_qcb = QtWidgets.QComboBox()
+        self.next_phrase_qcb.addItems(["Random", "Next", "Prev"])
+        # self.next_phrase_qcb.clicked.connect(self.on_next_phrase_activated)
+        hbox_l4.addWidget(self.next_phrase_qcb)
+
         self.letting_go_qpb = QtWidgets.QPushButton("I let go of my thinking and my suffering")
         self.letting_go_qpb.clicked.connect(self.on_letting_go_clicked)
         hbox_l4.addWidget(self.letting_go_qpb)
