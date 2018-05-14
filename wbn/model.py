@@ -8,10 +8,24 @@ from sqlalchemy.orm import sessionmaker
 
 
 
-print(sqlalchemy.__version__)
+DATABASE_FILE_STR = "wbn_db_file.db"
+
+SQLITE_FALSE_INT = 0
+SQLITE_TRUE_INT = 1
+SQLITE_NULL_STR = "NULL"
+NO_REFERENCE_INT = -1
+NO_REST_REMINDER_INT = -1
+NO_BREATHING_REMINDER_INT = -1
+NOT_USED_YET_INT = -1
+NOT_IMAGE_SET_STR = ""
+
+
+
+def init():
+    print(sqlalchemy.__version__)
 
 # ":memory:"
-db_engine = create_engine("sqlite:///sqlalchemy_test.db", echo=True)
+db_engine = create_engine("sqlite:///" + DATABASE_FILE_STR, echo=True)
 
 Base = declarative_base()
 

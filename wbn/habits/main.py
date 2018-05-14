@@ -35,10 +35,11 @@ class HabitsMainCw(QtWidgets.QWidget):
         self.setLayout(hbox_l2)
 
         self.habits_panel = wbn.habits.selection_panel.SelectionPanelCw()
-        hbox_l2.addWidget(self.habits_panel)
+        # self.habits_panel.setSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Maximum)
+        hbox_l2.addWidget(self.habits_panel)  # , stretch=1
 
         self.central_panel = wbn.habits.central_panel.CentralPanelCw()
-        hbox_l2.addWidget(self.central_panel)
+        hbox_l2.addWidget(self.central_panel, stretch=1)
 
         #self.diary_panel = wbn.habits.diary_panel.DiaryPanelCw()
         #hbox_l2.addWidget(self.diary_panel)

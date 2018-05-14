@@ -21,8 +21,8 @@ class SelectionPanelCw(QtWidgets.QWidget):
         self.schedule_subpanel = ScheduleSubpanelCw()
         vbox_l2.addWidget(self.schedule_subpanel)
 
-        self.habits_subpanel = HabitsSubpanelCw()
-        vbox_l2.addWidget(self.habits_subpanel)
+        # self.habits_subpanel = HabitsSubpanelCw()
+        # vbox_l2.addWidget(self.habits_subpanel)
 
         self.update_gui()
 
@@ -52,6 +52,7 @@ class SituationSubpanelCw(QtWidgets.QWidget):
         hbox_days_of_week_l3.addWidget(QtWidgets.QCheckBox("Su"))
         #if day_of_week_int == 0:
 
+        """
         hbox_personal_state_l3 = QtWidgets.QHBoxLayout()
         vbox_l2.addLayout(hbox_personal_state_l3)
         self.body_state_qcb = QtWidgets.QComboBox()
@@ -65,6 +66,7 @@ class SituationSubpanelCw(QtWidgets.QWidget):
         self.mind_state_qcb.addItem("Loving")
         self.mind_state_qcb.addItem("Overwhelmed")
         hbox_personal_state_l3.addWidget(self.mind_state_qcb)
+        """
 
         vbox_l2.addWidget(wbn.wbn_global.Label(
             "Please select your situation, the schedule and habits will be updated",
@@ -93,9 +95,11 @@ class ScheduleSubpanelCw(QtWidgets.QWidget):
         self.setLayout(vbox_l2)
         vbox_l2.addWidget(QtWidgets.QLabel("<h3>Schedule</h3>"))
 
+        self.list_widget = QtWidgets.QListWidget()
+        vbox_l2.addWidget(self.list_widget)
+
         for schedule_item_str in schedule_item_str_list:
-            habit_structured_qll = QtWidgets.QLabel(schedule_item_str)
-            vbox_l2.addWidget(habit_structured_qll)
+            self.list_widget.addItem(schedule_item_str)
 
         vbox_l2.addStretch(1)
 
