@@ -91,7 +91,7 @@ class SelfCompassionMainCw(QtWidgets.QWidget):
         self.feelings_qlw = QtWidgets.QListWidget()
         self.feelings_qlw.addItems(feelings_list)
         vbox_l5.addWidget(self.feelings_qlw, stretch=3)
-        # self.feelings_qlw.resize
+        # self.feelings_qlw.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Maximum)
 
         mind_list = ["Lust", "Without lust", "Hatred", "Without hatred", "Delusion", "Without delusion", "Contracted", "Distracted", "Exalted", "Unexalted", "Surpassable", "Unsurpassable", "Concentrated", "Unconcentrated", "Liberated", "Unliberated"]
         self.mind_qlw = QtWidgets.QListWidget()
