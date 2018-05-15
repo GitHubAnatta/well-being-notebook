@@ -3,6 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy import Column
 from sqlalchemy import Integer
 from sqlalchemy import String
+# from sqlalchemy import Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
@@ -14,31 +15,15 @@ print(sqlalchemy.__version__)
 db_engine = create_engine("sqlite:///sqlalchemy_test.db", echo=True)
 
 
-# class Helper:
-session = None
-base_class = None
+base_class = declarative_base()
+base_class.metadata.create_all(db_engine)
+
+SessionClass = sessionmaker()
+SessionClass.configure(bind=db_engine)
+session = SessionClass()
 
 
-def get_base():
-    global base_class
-    if base_class is None:
-        base_class = declarative_base()
-        base_class.metadata.create_all(db_engine)
-    return base_class
-
-
-def get_session():
-    global session
-    if session is None:
-        # ":memory:"
-
-        SessionClass = sessionmaker()
-        SessionClass.configure(bind=db_engine)
-        session = SessionClass()
-    return session
-
-
-class KindPhrase(get_base()):
+class KindPhrase(base_class):
     __tablename__ = "kind_phrases"
 
     id = Column(Integer, primary_key=True)
@@ -56,17 +41,17 @@ class KindPhrase(get_base()):
 example_phrase = KindPhrase(phrase="new lines again")
 print(example_phrase.phrase)
 
-get_session().add(example_phrase)
-get_session().commit()
+session.add(example_phrase)
+session.commit()
 
 count = 0
-for instance in get_session().query(KindPhrase):
+for instance in session.query(KindPhrase):
     if count == 1:
         instance.phrase += "edited"
     count += 1
 
-get_session().commit()
+session.commit()
 
-for instance in get_session().query(KindPhrase):
+for instance in session.query(KindPhrase):
     print(instance.phrase)
 
