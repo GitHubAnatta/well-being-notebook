@@ -6,17 +6,37 @@ from sqlalchemy import String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-
+# 1. getting a session, which will be shared for the whole application
+# 2.
 
 print(sqlalchemy.__version__)
 
-# ":memory:"
 db_engine = create_engine("sqlite:///sqlalchemy_test.db", echo=True)
 
-Base = declarative_base()
+
+class Helper:
+    __session = None
+    __base_class = None
+
+    @staticmethod
+    def get_base():
+        if Helper.__base_class is None:
+            Helper.__base_class = declarative_base()
+            Helper.__base_class.metadata.create_all(db_engine)
+        return Helper.__base_class
+
+    @staticmethod
+    def get_session():
+        if Helper.__session is None:
+            # ":memory:"
+
+            SessionClass = sessionmaker()
+            SessionClass.configure(bind=db_engine)
+            Helper.__session = SessionClass()
+        return Helper.__session
 
 
-class KindPhrase(Base):
+class KindPhrase(Helper.get_base()):
     __tablename__ = "kind_phrases"
 
     id = Column(Integer, primary_key=True)
@@ -28,26 +48,21 @@ class KindPhrase(Base):
 
 # print(KindPhrase())
 
-Base.metadata.create_all(db_engine)
 
-
-example_phrase = KindPhrase(phrase="instance phrase with space_______")
+example_phrase = KindPhrase(phrase="new lines")
 print(example_phrase.phrase)
-Session = sessionmaker()
-Session.configure(bind=db_engine)
-session = Session()
 
-session.add(example_phrase)
-session.commit()
+Helper.get_session().add(example_phrase)
+Helper.get_session().commit()
 
 count = 0
-for instance in session.query(KindPhrase):
+for instance in Helper.get_session().query(KindPhrase):
     if count == 1:
         instance.phrase += "edited"
     count += 1
 
-session.commit()
+Helper.get_session().commit()
 
-for instance in session.query(KindPhrase):
+for instance in Helper.get_session().query(KindPhrase):
     print(instance.phrase)
 
