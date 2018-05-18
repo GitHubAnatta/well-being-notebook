@@ -3,6 +3,7 @@ import enum
 import datetime
 import typing
 import wbn.model
+import wbn.wbn_global
 
 
 class MoveDirectionEnum(enum.Enum):
@@ -220,4 +221,6 @@ compassion_support_phrase_str_list = [
 def populate_db_with_setup_data():
     for compassion_support_phrase_str in compassion_support_phrase_str_list:
         SelfCompassionM.add(compassion_support_phrase_str)
+
+
 

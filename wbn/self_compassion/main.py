@@ -6,8 +6,8 @@ import random
 from PyQt5 import QtCore
 from PyQt5 import QtGui
 from PyQt5 import QtWidgets
-import wbn.self_compassion_model
 import wbn.wbn_global
+import wbn.model
 
 
 class SelfCompassionMainCw(QtWidgets.QWidget):
@@ -126,13 +126,13 @@ class SelfCompassionMainCw(QtWidgets.QWidget):
 
     def update_support_list(self):
         self.encouragement_qlw.clear()
-        for support_phrase in wbn.self_compassion_model.SelfCompassionM.get_all():
+        for support_phrase in wbn.model.session.query(wbn.model.SupportPhrase):
             self.encouragement_qlw.addItem(support_phrase.support_phrase[:25])
 
     def add_new_support_phrase_clicked(self):
-        wbn.self_compassion_model.SelfCompassionM.add(
-            self.new_support_phrase_qle.text()
-        )
+        wbn.model.session.add(wbn.model.SupportPhrase(
+            support_phrase=self.new_support_phrase_qle.text()
+        ))
         self.update_support_list()
 
     # noinspection PyAttributeOutsideInit
@@ -145,7 +145,7 @@ class SelfCompassionMainCw(QtWidgets.QWidget):
         self.time_passed_qll.setText(time_passed_str)
 
     def _on_encouragement_row_changed(self, i_new_current_row: int):
-        sc_support_phrase = wbn.self_compassion_model.SelfCompassionM.get_all()[i_new_current_row]
+        sc_support_phrase =wbn.model.session.query(wbn.model.SupportPhrase)[i_new_current_row]
         self.active_message_str = sc_support_phrase.support_phrase
         self.update_gui()
 
@@ -185,13 +185,13 @@ class SelfCompassionMainCw(QtWidgets.QWidget):
 
     def get_phrase_for_row_number(self, i_row_number: int):
         ret_support_phrase = None
-        for support_phrase in wbn.self_compassion_model.SelfCompassionM.get_all():
+        for support_phrase in wbn.model.session.query(wbn.model.SupportPhrase):
             if i_row_number == support_phrase.vert_order:
                 ret_support_phrase = support_phrase
                 break
         return ret_support_phrase
 
-
+    """
     def update_db_sort_order_for_all_rows(self):
         logging.debug("update_db_sort_order_for_all_rows")
         count = 0
@@ -209,6 +209,7 @@ class SelfCompassionMainCw(QtWidgets.QWidget):
 
         #self.update_gui()
         #self.update_selected()
+    """
 
     def update_gui(self):
         self.support_phrase_qll.setText(self.active_message_str)
