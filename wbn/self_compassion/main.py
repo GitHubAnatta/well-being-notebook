@@ -127,7 +127,10 @@ class SelfCompassionMainCw(QtWidgets.QWidget):
     def update_support_list(self):
         self.encouragement_qlw.clear()
         for support_phrase in wbn.model.session.query(wbn.model.SupportPhrase):
-            self.encouragement_qlw.addItem(support_phrase.support_phrase[:25])
+            support_phrase_string = support_phrase.support_phrase[:25]
+            if support_phrase.starred:
+                support_phrase_string = "<starred>" + support_phrase_string + "</b>"
+            self.encouragement_qlw.addItem(support_phrase_string)
 
     def add_new_support_phrase_clicked(self):
         wbn.model.session.add(wbn.model.SupportPhrase(
@@ -157,6 +160,7 @@ class SelfCompassionMainCw(QtWidgets.QWidget):
         #self._show_new_random_inspiring_message()
 
     def _show_new_random_inspiring_message(self):
+        return
         if self.encouragement_qlw.count() < 1:
             logging.warning("_show_new_random_inspiring_message: count() < 1")
             return
