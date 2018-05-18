@@ -8,10 +8,11 @@ from PyQt5 import QtCore
 from PyQt5 import QtWidgets
 import wbn.gui.main_window
 import wbn.wbn_global
+import wbn.model
 
 
 if __name__ == "__main__":
-    wbn.wbn_global.db_file_exists_at_application_startup_bl = os.path.isfile(wbn.wbn_global.get_database_filename())
+    wbn.wbn_global.db_file_exists_at_application_startup_bl = os.path.isfile(wbn.model.DATABASE_FILE_STR)
     # -settings this variable before the file has been created
 
     logging.basicConfig(level=logging.DEBUG)  # -by default only warnings and higher are shown

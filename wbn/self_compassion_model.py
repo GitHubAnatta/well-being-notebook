@@ -2,8 +2,7 @@ import csv
 import enum
 import datetime
 import typing
-import wbn.db_schema
-import wbn.db
+import wbn.model
 
 
 class MoveDirectionEnum(enum.Enum):
